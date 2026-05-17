@@ -1,0 +1,9 @@
+# Ignorar las librerías descargadas (son muy pesadas y se recuperan con npm install)
+node_modules/
+
+# Ignorar las contraseñas y configuraciones secretas del entorno
+.env
+
+# Archivos sueltos del sistema operativo
+.DS_Store
+Thumbs.db
