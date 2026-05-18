@@ -1,0 +1,60 @@
+LICORERA — DOCUMENTACIÓN DEL PROYECTO
+
+1. Visión general
+   - Proyecto: Licorera - sistema de inventario para productos, categorías, proveedores y movimientos.
+   - Arquitectura: frontend estático en `frontend/` y backend API en `backend/`.
+   - Base de datos: PostgreSQL/Supabase, accesible desde el backend mediante `backend/db.js`.
+
+2. Estructura del proyecto
+   - `frontend/`
+     - `index.html`: interfaz principal y tablas dinámicas.
+     - `styles.css`: estilos visuales del dashboard.
+     - `app.js`: SPA en vanilla JS, consume la API REST y renderiza tablas.
+     - `package.json`: metadatos del frontend (sin dependencias de backend).
+   - `backend/`
+     - `api.js`: servidor Express con endpoints CRUD y lógica de inventario.
+     - `db.js`: configuración de conexión PostgreSQL/Supabase usando `pg`.
+     - `package.json`: dependencias backend (`express`, `pg`, `cors`, `dotenv`).
+     - `.env`: variable `DATABASE_URL` para la conexión segura.
+   - `cambios.txt`: documentación interna del proyecto y notas de cambios.
+
+3. Backend — API y lógica
+   - El servidor corre en `http://localhost:3000` por defecto.
+   - El backend sirve el frontend estático desde `frontend/` con `express.static(...)`.
+   - Endpoints principales:
+     - Productos: `GET /api/productos`, `GET /api/productos/:id`, `POST /api/productos`, `PUT /api/productos/:id`, `DELETE /api/productos/:id`
+     - Categorías: `GET /api/categorias`, `POST /api/categorias`, `PUT /api/categorias/:id`, `DELETE /api/categorias/:id`
+     - Proveedores: `GET /api/proveedores`, `POST /api/proveedores`, `PUT /api/proveedores/:id`, `DELETE /api/proveedores/:id`
+     - Movimientos: `GET /api/movimientos`
+   - Lógica de inventario:
+     - Al crear un producto, se crea un movimiento `ENTRADA` automático con la cantidad inicial.
+     - Al actualizar un producto, se calcula la diferencia de stock y se registra `ENTRADA` o `SALIDA` según corresponda.
+     - Se mantiene la coherencia de datos entre stock y movimientos.
+   - Zona horaria:
+     - `backend/api.js` fuerza `process.env.TZ = 'America/Bogota'` para usar hora de Colombia.
+
+4. Frontend — experiencia de usuario
+   - La interfaz muestra tablas de productos, categorías, proveedores y movimientos.
+   - El frontend consume los datos desde `/api/*` y renderiza dinámicamente los `<tbody>`.
+   - Formularios de creación/edición permiten gestionar productos, categorías y proveedores.
+   - Se incorporó `lista-elementos` como contenedor requerido para la tabla de productos.
+   - Los campos mostrados incluyen descripción y fecha de registro donde aplica.
+
+5. Cómo ejecutar el proyecto
+   1. Entra a `backend/`.
+   2. Ejecuta `npm install` (si no se ha hecho aún).
+   3. Crea el archivo `backend/.env` con `DATABASE_URL=...`.
+   4. Ejecuta `npm start`.
+   5. Abre `http://localhost:3000/` en el navegador.
+
+6. Notas importantes
+   - El frontend no debe contener acceso directo a la base de datos.
+   - Todas las llamadas de datos se realizan a través de la API del backend.
+   - El backend debe manejar los errores con `try/catch` y devolver JSON de error.
+   - Si se desea desplegar, es posible mantener este mismo servidor Express como single-entry point.
+
+7. Resumen de estado actual
+   - Proyecto listo para uso local con backend y frontend integrados.
+   - Endpoints CRUD implementados y sincronizados con el frontend.
+   - Se documentó la estructura, el flujo y las instrucciones de ejecución.
+

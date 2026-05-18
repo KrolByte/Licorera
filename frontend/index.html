@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Licorera · Sistema de Inventario</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <span class="brand-icon">🥃</span>
+      <div>
+        <p class="brand-title">LICORERA</p>
+        <p class="brand-sub">Inventario v1.0</p>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <button class="nav-item active" data-section="productos">
+        <span class="nav-icon">📦</span>
+        <span>Productos</span>
+      </button>
+      <button class="nav-item" data-section="categorias">
+        <span class="nav-icon">🏷️</span>
+        <span>Categorías</span>
+      </button>
+      <button class="nav-item" data-section="proveedores">
+        <span class="nav-icon">🚚</span>
+        <span>Proveedores</span>
+      </button>
+      <button class="nav-item" data-section="movimientos">
+        <span class="nav-icon">📊</span>
+        <span>Movimientos</span>
+      </button>
+    </nav>
+
+    <div class="sidebar-stats" id="sidebar-stats">
+      <div class="stat-card">
+        <span class="stat-val" id="stat-productos">0</span>
+        <span class="stat-label">Productos</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-val" id="stat-stock-bajo">0</span>
+        <span class="stat-label">Stock bajo</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- TOP BAR -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <h1 class="page-title" id="page-title">Productos</h1>
+        <span class="page-badge" id="page-badge">inventario</span>
+      </div>
+      <div class="topbar-right">
+        <div class="search-wrap">
+          <span class="search-icon">⌕</span>
+          <input type="text" id="search-input" class="search-input" placeholder="Buscar…" />
+        </div>
+        <button class="btn-primary" id="btn-nuevo">+ Nuevo</button>
+      </div>
+    </header>
+
+    <!-- ALERT STOCK BAJO -->
+    <div class="alert-stock hidden" id="alert-stock">
+      ⚠️ Hay productos con stock por debajo del mínimo establecido
+    </div>
+
+    <!-- SECCIÓN: PRODUCTOS -->
+    <section id="section-productos" class="section active">
+      <div id="lista-elementos">
+        <div class="table-wrap">
+          <table class="data-table" id="tabla-productos">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Nombre</th>
+                <th>Categoría</th>
+                <th>Proveedor</th>
+                <th>Descripción</th>
+                <th>Fecha registro</th>
+                <th>P. Compra</th>
+                <th>P. Venta</th>
+                <th>Stock</th>
+                <th>Mín.</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="tbody-productos"></tbody>
+          </table>
+          <p class="empty-state hidden" id="empty-productos">Sin productos registrados aún.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN: CATEGORÍAS -->
+    <section id="section-categorias" class="section">
+      <div class="table-wrap">
+        <table class="data-table" id="tabla-categorias">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Nombre</th>
+              <th>Descripción</th>
+              <th>Productos</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="tbody-categorias"></tbody>
+        </table>
+        <p class="empty-state hidden" id="empty-categorias">Sin categorías registradas aún.</p>
+      </div>
+    </section>
+
+    <!-- SECCIÓN: PROVEEDORES -->
+    <section id="section-proveedores" class="section">
+      <div class="table-wrap">
+        <table class="data-table" id="tabla-proveedores">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Nombre</th>
+              <th>Encargado</th>
+              <th>Teléfono</th>
+              <th>Email</th>
+              <th>Productos</th>
+              <th>Fecha registro</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="tbody-proveedores"></tbody>
+        </table>
+        <p class="empty-state hidden" id="empty-proveedores">Sin proveedores registrados aún.</p>
+      </div>
+    </section>
+
+    <!-- SECCIÓN: MOVIMIENTOS -->
+    <section id="section-movimientos" class="section">
+      <div class="table-wrap">
+        <table class="data-table" id="tabla-movimientos">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Producto</th>
+              <th>Tipo</th>
+              <th>Cantidad</th>
+              <th>Motivo</th>
+              <th>Fecha</th>
+            </tr>
+          </thead>
+          <tbody id="tbody-movimientos"></tbody>
+        </table>
+        <p class="empty-state hidden" id="empty-movimientos">Sin movimientos registrados aún.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- MODAL -->
+  <div class="modal-overlay hidden" id="modal-overlay">
+    <div class="modal" id="modal">
+      <div class="modal-header">
+        <h2 class="modal-title" id="modal-title">Nuevo Producto</h2>
+        <button class="modal-close" id="modal-close">✕</button>
+      </div>
+      <div class="modal-body" id="modal-body">
+        <!-- contenido dinámico según la sección activa -->
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div class="toast hidden" id="toast">
+    <span id="toast-msg"></span>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

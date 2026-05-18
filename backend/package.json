@@ -1,0 +1,19 @@
+{
+  "name": "licorera-backend",
+  "version": "1.0.0",
+  "description": "Sistema de Inventario - Licorera Backend API",
+  "main": "api.js",
+  "scripts": {
+    "start": "node api.js",
+    "dev": "nodemon api.js"
+  },
+  "dependencies": {
+    "express": "^5.2.1",
+    "pg": "^8.20.0",
+    "dotenv": "^17.4.2",
+    "cors": "^2.8.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}
