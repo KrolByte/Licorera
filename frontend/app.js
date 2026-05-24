@@ -28,7 +28,7 @@
  */
 
 //  CONFIGURACIÓN
-const API_BASE = 'http://localhost:3000/api';
+const API_BASE = 'https://licorera-backend-j97k.onrender.com/api';
 
 //  ESTADO GLOBAL  (caché local para búsqueda y conteos)
 const state = {
