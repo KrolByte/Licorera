@@ -397,6 +397,6 @@ app.get('/api/movimientos', async (req, res) => {
 //  INICIO DEL SERVIDOR
 
 app.listen(PORT, () => {
-  console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`);
-  console.log(`📚 API disponible en http://localhost:${PORT}/api`);
+  console.log(`🚀 Servidor corriendo en el puerto ${PORT}`);
+  console.log(`📚 API disponible en el puerto ${PORT}/api`);
 });
